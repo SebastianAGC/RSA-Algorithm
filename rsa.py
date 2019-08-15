@@ -1,11 +1,26 @@
 import random
 
+
 def text2number(msg):
     f = open("MessageInNumbers.txt", "w+")
     for letter in msg:
         ascii_val = ord(letter)
-        f.write(""+ str(ascii_val) + "\n")
+        f.write("" + str(ascii_val) + "\n")
     f.close()
+
+
+def number2text():
+    f = open("DecipherMessage.txt", "r")
+    content = f.readlines()
+    f.close()
+
+    msg = ""
+    for line in content:
+        msg += chr(int(line))
+
+    return msg
+
+
 
 def cipher():
     f = open("PublicKey.txt", "r")
@@ -23,10 +38,11 @@ def cipher():
     f = open("CipherMessage.txt", "w+")
 
     for line in lines_array:
-        c = int(line)**e % n
+        c = int(line) ** e % n
         f.write("" + str(c) + "\n")
 
     print("Cifrado con éxito! Su mensaje cifrado se encuentra en el archivo CipherMessage.txt.")
+
 
 def decipher():
     f = open("PrivateKey.txt", "r")
@@ -43,7 +59,7 @@ def decipher():
 
     f = open("DecipherMessage.txt", "w+")
     for line in lines_array:
-        m = int(line)**d % n
+        m = int(line) ** d % n
         f.write("" + str(m) + "\n")
 
 
@@ -58,13 +74,13 @@ def generateKey():
     while x % m == 0:
         x = random.randint(2, m)
 
-    #for i in range(2, m):
+    # for i in range(2, m):
     #    if i % m != 0:
     #        x = i
     #        break
 
-    #d = 0
-    #while (d * x) % m != 1:
+    # d = 0
+    # while (d * x) % m != 1:
     #   print(d)
     #    d = d + 1
 
@@ -121,7 +137,8 @@ def extended_euclid_gcd(a, b):
 
 
 def main():
-    print("Bienvenido al programa RSA.\nListado de opciones:\n1. Cifrar\n2. Descifrar\n3. Generar llave.\n4. Parsear mensaje")
+    print(
+        "Bienvenido al programa RSA.\nListado de opciones:\n1. Cifrar\n2. Descifrar\n3. Generar llave.\n4. Parsear mensaje\n5. Leer mensaje")
     op = int(input("Ingrese una opción: "))
     if op == 1:
         cipher()
@@ -130,7 +147,9 @@ def main():
     elif op == 3:
         generateKey()
     elif op == 4:
-        text2number(msg = input("Ingrese el mensaje a parsear: "))
+        text2number(msg=input("Ingrese el mensaje a parsear: "))
+    elif op == 5:
+        print(number2text())
 
 
 main()
